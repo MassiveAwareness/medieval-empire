@@ -1,39 +1,34 @@
-body {
-    /* A háttérszín megmarad arra az esetre, ha a kép lassan töltődne be,
-       vagy nem lenne elérhető. */
+html, body {
     background-color: #3d2c1d;
-
-    /* A háttérkép beállítása. A 'images/background.jpg' útvonalnak
-       meg kell egyeznie a mappaszerkezeteddel! */
     background-image: url('../assets/background.png');
-
-    /* A kép méretezése: mindig töltse ki a teljes képernyőt anélkül,
-       hogy torzulna (a széleiből levághat, ha kell). */
     background-size: cover;
-
-    /* A kép pozíciója: a kép közepe mindig a képernyő közepén legyen. */
     background-position: center center;
-
-    /* A kép ne ismétlődjön, ha kisebb, mint a képernyő. */
     background-repeat: no-repeat;
-
-    /* Ez a leglátványosabb: a háttérkép fixen a helyén marad,
-       miközben a tartalom (a játék) görgethető felette. */
     background-attachment: fixed;
-
     color: #e0dcd1;
     font-family: 'Georgia', serif;
     margin: 0;
     padding: 40px 0;
     min-height: 100vh;
     box-sizing: border-box;
+
+    /* Scrollbar eltüntetése Firefox-hoz */
+    scrollbar-width: none;
+    /* Scrollbar eltüntetése Internet Explorer-hez és Edge-hez */
+    -ms-overflow-style: none;
+}
+
+/* VÁLTOZÁS: Ez a szabály is vonatkozzon mindkettőre */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 #game-container {
     width: 800px;
     margin: 0 auto;
     border: 5px solid #8c6a46;
-    background-color: #c4a787; /* A pergamen háttér most még fontosabb a jó olvashatóságért */
+    background-color: #c4a787;
     color: #3d2c1d;
     border-radius: 10px;
     padding: 20px;
@@ -51,7 +46,6 @@ header h1 {
 .panel {
     margin-bottom: 20px;
     padding: 15px;
-    /* Ezt a hátteret egy kicsit sötétebbre vehetjük a jobb kontraszt érdekében */
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
 }
@@ -83,4 +77,46 @@ button:hover {
     font-style: italic;
     margin-top: 5px;
     color: #5a3d21;
+}
+
+/* =================================== */
+/* Töltőképernyő Stílusok              */
+/* =================================== */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #e0dcd1;
+    font-size: 1.5em;
+    transition: opacity 0.5s ease-out;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 20px;
+    background-color: #3d2c1d;
+    border: 2px solid #8c6a46;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background-color: #c4a787;
+    border-radius: 3px;
+    transition: width 0.3s ease-out;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
