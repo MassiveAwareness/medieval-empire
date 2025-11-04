@@ -1,8 +1,7 @@
 # Medieval Empire
 
-<!-- A great place for a logo or stylized text of the game name -->
 <div align="center">
-  <img src="[PLACEHOLDER FOR LOGO OR BANNER, e.g., ./docs/banner.png]" alt="Medieval Empire Banner">
+  <img src="./assets/background.png" alt="Medieval Empire Banner">
 </div>
 
 **Alpha v1.0.3**
@@ -15,7 +14,6 @@ A text-based empire-building and management game crafted with pure, vanilla HTML
 
 </div>
 
-<!-- IDEAL PLACE FOR AN IN-GAME SCREENSHOT OR A SHORT ANIMATED GIF -->
 <div align="center">
   <img src="[PLACEHOLDER FOR SCREENSHOT, e.g., ./docs/gameplay.gif]" alt="Medieval Empire Gameplay Screenshot">
 </div>
