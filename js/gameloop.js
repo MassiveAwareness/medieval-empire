@@ -41,6 +41,10 @@ document.getElementById('upgrade-lumberyard').addEventListener('click', () => up
 document.getElementById('upgrade-quarry').addEventListener('click', () => upgradeBuilding('quarry'));
 document.getElementById('upgrade-farm').addEventListener('click', () => upgradeBuilding('farm'));
 
+// ÚJ: Művelet gombok
+document.getElementById('save-button').addEventListener('click', saveGame);
+document.getElementById('reset-button').addEventListener('click', resetGame);
+
 
 // =================================================================
 // JÁTÉK LOGIKA FUNKCIÓK
@@ -147,6 +151,52 @@ function updateBuildingUI(name) {
 
 
 // =================================================================
+// ÚJ: MENTÉS, BETÖLTÉS, TÖRLÉS FUNKCIÓK
+// =================================================================
+
+/**
+ * Elmenti a jelenlegi gameState objektumot a böngésző localStorage-ébe.
+ */
+function saveGame() {
+    // A localStorage csak szöveget (string) tud tárolni.
+    // A JSON.stringify() a JavaScript objektumunkat szöveggé alakítja.
+    localStorage.setItem('gameState', JSON.stringify(gameState));
+    showMessage('Game state was successfully saved!', 'success');
+}
+
+/**
+ * Betölti a játékállást a localStorage-ből, ha létezik.
+ */
+function loadGame() {
+    const savedStateJSON = localStorage.getItem('gameState');
+
+    if(savedStateJSON) {
+        // Ha van mentés. visszaalakítjuk objektummá a JSON.parse() segítségével.
+        const savedState = JSON.parse(savedStateJSON);
+
+        // Felülírjuk az alapértelmezett gameState-et a mentett állással.
+        // Az Object.assign egy biztonságosabb módja, ha később új dolgokat adunk a gameState-hez.
+        gameState = Object.assign(gameState, savedState);
+        showMessage('Previous save was successfully loaded!', 'success');
+    }
+}
+
+/**
+ * Törli a mentett játékállást és újratölti az oldalt a kezdéshez.
+ */
+function resetGame() {
+    // Kitöröljük a mentett adatot a localStorage-ből.
+    localStorage.removeItem('gameState');
+    showMessage(`Saved game state deleted! Game resets...`, 'success');
+
+    // Várunk egy kicsit, hogy a játékos elolvashassa az üzenetet, majd újratöltjük az oldalt.
+    setTimeout(() => {
+        location.reload();
+    }, 3000);
+}
+
+
+// =================================================================
 // JÁTÉK HUROK (GAME LOOP)
 // =================================================================
 
@@ -178,10 +228,13 @@ function gameLoop() {
 // =================================================================
 // A JÁTÉK INDÍTÁSA
 // =================================================================
-console.log("Starting game...");
 
-// 1. Azonnal frissítjük a kijelzőt, hogy a játékos lássa a kezdőértékeket.
-updateDisplay(); 
+// 1. LÉPÉS: BETÖLTÉS!
+// Mielőtt bármi történik, megpróbáljuk betölteni a mentett állást.
+loadGame();
 
-// 2. Elindítjuk a játék hurkot, ami 1000ms (1 másodperc) időközönként fut le.
-setInterval(gameLoop, 1000);
+// 2. LÉPÉS: A felület frissítése a betöltött (vagy alapértelmezett) adatokkal.
+updateDisplay();
+
+// 3. LÉPÉS: A game loop elindítása.
+setInterval(gameLoop, 100);
