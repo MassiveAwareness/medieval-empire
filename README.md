@@ -66,18 +66,20 @@ The project follows a logical folder structure for easy navigation and maintenan
 ```graphql
 /MedievalEmpire/
 |
-|-- index.html # The main HTML file, the "skeleton" of the game.
-|-- style.css # All CSS styles in a single file.
-|-- README.md # This documentation file.
+|-- index.html # The main HTML file, the "skeleton" of the game
+|-- style.css # All CSS styles in a single file
+|-- README.md # This documentation file
 |
 |-- /images/
-| |-- background.jpg # The main background image for the game.
+| |-- background.png # The main background image for the game
+| |-- screenshot.png # The screenshot used above
+| |-- favicon.ico # Favicon of the website
 |
 |-- /js/
-|-- gameloop.js # MAIN ENTRY POINT: Manages the loading screen, initializes the game, and sets up event listeners. (Your file name, originally main.js)
-|-- state.js # The central brain of the game, contains the gameState object.
-|-- ui.js # Handles all DOM manipulation (updating the UI, displaying messages).
-|-- gameLogic.js # The core gameplay logic: building, saving/loading, and the main gameLoop.
+|-- gameloop.js # MAIN ENTRY POINT: Manages the loading screen, initializes the game, and sets up event listeners
+|-- state.js # The central brain of the game, contains the gameState object
+|-- ui.js # Handles all DOM manipulation (updating the UI, displaying messages)
+|-- gameLogic.js # The core gameplay logic: building, saving/loading, and the main gameLoop
 ```
 
 ## Installation & Usage
@@ -86,9 +88,8 @@ Since this project uses no server-side technologies or complex build steps, runn
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/MassiveAwareness/MedievalEmpire.git
+    git clone https://github.com/MassiveAwareness/medieval-empire.git
     ```
-    <!-- REPLACE THIS URL WITH YOUR OWN REPOSITORY LINK -->
 
 2.  **Open the `index.html` file:**
     Navigate to the cloned directory and open the `index.html` file in your favorite web browser.
