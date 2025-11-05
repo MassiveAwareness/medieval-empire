@@ -71,13 +71,15 @@ This project is proudly built on the fundamental building blocks of the web, wit
 The project follows a multi-page structure with shared assets, promoting code reusability and organization.
 
 ```graphql
-/MedievalEmpire/
+/medieval-empire/
 |
 |-- index.html          # Main dashboard page.
 |-- buildings.html      # Page for managing all buildings.
 |-- keep.html           # Page dedicated to the Keep.
-|-- style.css           # Shared CSS file for all pages.
 |-- README.md           # This documentation file.
+|
+|-- /css/
+|   |-- layout.css           # Shared CSS file for all pages.
 |
 |-- /assets/
 |   |-- background.png  # The main background image for the game.
