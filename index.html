@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medieval Empire</title>
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="icon" type="ico/image" href="./assets/favicon.ico" />
+
+</head>
+
+<body>
+    <div id="loading-screen">
+        <p><strong>Loading Medieval Empire...</strong></p>
+        <div class="progress-bar">
+            <div id="progress-bar-inner" class="progress-bar-inner"></div>
+        </div>
+    </div>
+    
+    <div id="game-container">
+        <header>
+            <h1>
+                <a href="https://github.com/MassiveAwareness/medieval-empire" target="_blank">
+                    Medieval Empire
+                </a>
+            </h1>
+
+            <p class="version-subtitle">version Alpha v1.1.0</p>
+        </header>
+
+        <!-- Nyersanyagok kijelzője -->
+        <div id="resources-panel" class="panel">
+            <h2>Resources</h2>
+            <p><strong>Wood: <span id="wood">0</span> / <span id="wood-cap">0</span></strong></p>
+            <p><strong>Stone: <span id="stone">0</span> / <span id="stone-cap">0</span></strong></p>
+            <p><strong>Food: <span id="food">0</span> / <span id="food-cap">0</span></strong></p>
+            <p><strong>Gold: <span id="gold">0</span></strong></p>
+            <p><strong>Sapphire: <span id="sapphire">0</strong></p>
+        </div>
+
+        <!-- Épületek és akciók -->
+        <div id="buildings-panel" class="panel">
+            <h2>Buildings</h2>
+            <!-- Favágó -->
+            <div class="building">
+                <p>Lumberyard (Level <span id="lumberyard-level">0</span>)</p>
+                <p>Production: +<span id="lumberyard-production">0</span> Woods / s</p>
+                <button id="upgrade-lumberyard">Upgrade</button>
+                <p class="cost"><span id="lumberyard-cost">10 Woods</span></p>
+            </div>
+
+            <!-- Kőfejtő -->
+            <div class="building">
+                <p>Quarry (Level <span id="quarry-level">0</span>)</p>
+                <p>Production: +<span id="quarry-production">0</span> Stones / s</p>
+                <button id="upgrade-quarry">Upgrade</button>
+                <p class="cost"><span id="quarry-cost">10 Stones</span></p>
+            </div>
+
+            <!-- Farm -->
+            <div class="building">
+                <p>Farm (Level <span id="farm-level">0</span>)</p>
+                <p>Production: +<span id="farm-production">0</span> Food / s</p>
+                <button id="upgrade-farm">Upgrade</button>
+                <p class="cost"><span id="farm-cost">10 Food</span></p>
+            </div>
+
+            <!-- ÚJ: Raktár panel -->
+            <div class="building">
+                <p>Warehouse (Level: <span id="warehouse-level">0</span>)</p>
+                <p>Description: Increases all the resources' storage capacity.</p>
+                <button id="upgrade-warehouse">Upgrade</button>
+                <p class="cost"><span id="warehouse-cost">100 Woods, 50 Stones</span></p>
+            </div>
+        </div>
+
+        <div id="actions-panel" class="panel">
+            <h2>Actions</h2>
+            <button id="save-button">Save Game</button>
+            <button id="reset-button">Reset Game</button>
+        </div>
+
+        <div id="message-panel" class="panel">
+            <p id="message-text">Welcome to your empire! Start building your own kingdom!</p>
+        </div>
+
+        <footer>&COPY; MassiveAwareness, 2025. All rights reserved!</footer>
+    </div>
+
+    <script type="module" src="./js/gameloop.js"></script>
+</body>
+</html>

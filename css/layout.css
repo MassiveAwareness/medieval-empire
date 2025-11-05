@@ -1,0 +1,150 @@
+html, body {
+    background-color: #3d2c1d;
+    background-image: url('../assets/background.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #e0dcd1;
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 40px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+    /* Scrollbar eltüntetése Firefox-hoz */
+    scrollbar-width: none;
+    /* Scrollbar eltüntetése Internet Explorer-hez és Edge-hez */
+    -ms-overflow-style: none;
+}
+
+/* VÁLTOZÁS: Ez a szabály is vonatkozzon mindkettőre */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+#game-container {
+    width: 800px;
+    margin: 0 auto;
+    border: 5px solid #8c6a46;
+    background-color: #c4a787;
+    color: #3d2c1d;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+header h1 {
+    text-align: center;
+    color: #5a3d21;
+    border-bottom: 2px solid #8c6a46;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.panel {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}
+
+.building {
+    border: 1px solid #8c6a46;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #5a3d21;
+    color: #e0dcd1;
+    border: 2px solid #3d2c1d;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #8c6a46;
+}
+
+.cost {
+    font-size: 0.9em;
+    font-style: italic;
+    margin-top: 5px;
+    color: #5a3d21;
+}
+
+/* =================================== */
+/* Töltőképernyő Stílusok              */
+/* =================================== */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #e0dcd1;
+    font-size: 1.5em;
+    transition: opacity 0.5s ease-out;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 20px;
+    background-color: #3d2c1d;
+    border: 2px solid #8c6a46;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background-color: #c4a787;
+    border-radius: 3px;
+    transition: width 0.3s ease-out;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+header h1 a {
+    color: inherit;
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+}
+
+header h1 a:hover {
+    text-decoration: underline;
+}
+
+.version-subtitle {
+    text-align: center;
+    margin: -10px 0 15px 0;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #5a3d21;
+    opacity: 0.8;
+}
+
+footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 2px solid #8c6a46;
+    font-size: 0.8rem;
+    color: #5a3d21;
+}
