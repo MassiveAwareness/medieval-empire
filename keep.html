@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Keep - Medieval Empire</title>
+    <link rel="stylesheet" href="./css/layout.css" />
+
+</head>
+
+<body>
+    <!-- Töltőképernyő -->
+    <div id="loading-screen">
+        <p><strong>Loading The Keep...</strong></p>
+        <div class="progress-bar">
+            <div id="progress-bar-inner" class="progress-bar-inner"></div>
+        </div>
+    </div>
+
+    <!-- Toast container minden oldal tetején -->
+    <div id="toast-container"></div>
+
+    <div id="game-container">
+        <header>
+            <h1>The Keep - 
+                <a href="https://github.com/MassiveAwareness/medieval-empire" target="_blank" rel="noopener noreferrer">
+                    Medieval Empire
+                </a>
+            </h1>
+            <p class="version-subtitle">version Alpha v1.2.0</p>
+        </header>
+
+        <nav>
+            <a href="./index.html">Dashboard</a>
+            <a href="./buildings.html">Buildings</a>
+            <a href="./keep.html" class="active">The Keep</a>
+        </nav>
+
+        <div id="resources-panel" class="panel">
+            <h2>Resources</h2>
+            <p>Wood: <span id="wood">0</span> / <span id="wood-cap">0</span></p>
+            <p>Stone: <span id="stone">0</span> / <span id="stone-cap">0</span></p>
+            <p>Food: <span id="food">0</span> / <span id="food-cap">0</span></p>
+        </div>
+
+        <main>
+            <div class="panel">
+                <h2>The Keep</h2>
+                <p>This section will contain detailed information and special actions related to your kingdom!</p>
+                <p><strong>Content coming soon...</strong></p>
+            </div>
+        </main>
+
+        <footer>&COPY; MassiveAwareness, 2025. All rights reserved!</footer>
+    </div>
+
+    <script type="module" src="./js/gameloop.js"></script>
+</body>
+</html>

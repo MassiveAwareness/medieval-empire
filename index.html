@@ -16,6 +16,9 @@
             <div id="progress-bar-inner" class="progress-bar-inner"></div>
         </div>
     </div>
+
+    <!-- Toast container minden oldal tetején -->
+    <div id="toast-container"></div>
     
     <div id="game-container">
         <header>
@@ -25,10 +28,15 @@
                 </a>
             </h1>
 
-            <p class="version-subtitle">version Alpha v1.1.2</p>
+            <p class="version-subtitle">version Alpha v1.2.0</p>
         </header>
 
-        <!-- Nyersanyagok kijelzője -->
+        <nav>
+            <a href="./index.html" class="active">Dashboard</a>
+            <a href="./buildings.html">Buildings</a>
+            <a href="./keep.html">The Keep</a>
+        </nav>
+
         <div id="resources-panel" class="panel">
             <h2>Resources</h2>
             <p><strong>Wood: <span id="wood">0</span> / <span id="wood-cap">0</span></strong></p>
@@ -38,23 +46,16 @@
             <p><strong>Sapphire: <span id="sapphire">0</strong></p>
         </div>
 
-        <!-- Épületek és akciók -->
-        <div id="buildings-panel" class="panel">
-            <h2>Buildings</h2>
-            <!-- MÓDOSÍTVA: A régi, fix épület div-ek törölve lettek -->
-            <!-- Ide fogja a JavaScript dinamikusan generálni az épületeket -->
-            <div id="building-list"></div>
-        </div>
-
-        <div id="actions-panel" class="panel">
-            <h2>Actions</h2>
-            <button id="save-button">Save Game</button>
-            <button id="reset-button">Reset Game</button>
-        </div>
-
-        <div id="message-panel" class="panel">
-            <p id="message-text">Welcome to your empire! Start building your own kingdom!</p>
-        </div>
+        <main>
+            <div class="panel">
+                <h2>Welcome to your empire!</h2>
+                <p>
+                    This is your main dashboard. From here you can get an overview of your empire.<br />
+                    Use the navigation above to manage your buildings or view your Keep's status.
+                </p>
+                <p>Your goal is to expand your territory and power by wisely managing your resources and construction queue.</p>
+            </div>
+        </main>
 
         <footer>&COPY; MassiveAwareness, 2025. All rights reserved!</footer>
     </div>
