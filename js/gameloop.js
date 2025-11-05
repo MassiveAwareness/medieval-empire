@@ -4,10 +4,19 @@ if (history.scrollRestoration) {
 window.scrollTo(0, 0);
 
 import { updateDisplay, showMessage } from './ui.js';
-import { build, upgrade, gameLoop as logicGameLoop, saveGame, loadGame, resetGame } from './gameLogic.js';
+import { build, upgrade, gameLoop as logicGameLoop, saveGame, loadGame, resetGame, formatTime } from './gameLogic.js';
 
-// --- AUTOMATIKUS MENTÉS AZ OLDAL BEZÁRÁSAKOR ---
+// --- ÚJ: A "ZÁSZLÓ" VÁLTOZÓ ---
+// Ez a változó jelzi, ha a reset gomb miatt fog újratöltődni az oldal.
+let isResetting = false;
+
+// --- MÓDOSÍTVA: AUTOMATIKUS MENTÉS ---
 window.addEventListener('beforeunload', (event) => {
+    // Ha a 'isResetting' zászló igaz, akkor ne mentsünk, csak lépjünk ki.
+    if (isResetting) {
+        return;
+    }
+    console.log("Auto-saving game before unload...");
     saveGame();
 });
 
@@ -40,6 +49,7 @@ function handleLoadingScreen() {
 }
 
 function initializeGame() {
+    console.log("Initializing game on page:", window.location.pathname);
 
     if (window.location.pathname.endsWith('buildings.html')) {
         const buildingContainer = document.getElementById('building-list');
@@ -59,14 +69,21 @@ function initializeGame() {
         }
         
         const resetBtn = document.getElementById('reset-button');
-        if (resetBtn) resetBtn.addEventListener('click', resetGame);
+        if (resetBtn) {
+            // --- MÓDOSÍTVA: A RESET GOMB ESEMÉNYKEZELŐJE ---
+            resetBtn.addEventListener('click', () => {
+                // 1. Lépés: Állítsd be a zászlót, hogy jelezzük a reset szándékát.
+                isResetting = true;
+                // 2. Lépés: Hívd meg a szokásos reset logikát.
+                resetGame();
+            });
+        }
     }
     
     const loadResult = loadGame();
     updateDisplay();
 
     const isNewSession = !sessionStorage.getItem('sessionStarted');
-
     if (isNewSession) {
         sessionStorage.setItem('sessionStarted', 'true');
         if (!loadResult.loaded) {
