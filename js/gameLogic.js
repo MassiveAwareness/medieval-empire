@@ -1,11 +1,19 @@
 import { gameState } from './state.js';
 import { showMessage, updateDisplay, capitalizeFirstLetter } from './ui.js';
 
-// --- ÚJ SEGÉDFÜGGVÉNY: AZ IDŐ FORMÁZÁSA ---
 export const formatTime = (seconds) => {
     if(seconds < 60) return `${Math.floor(seconds)} seconds`;
     if(seconds < 3600) return `${Math.floor(seconds / 60)} minutes`;
     return `${Math.floor(seconds / 3600)} hours and ${Math.floor((seconds % 3600) / 60)} minutes`;
+};
+
+export const changePlayerName = (newName) => {
+    // Egyszerű validáció: ne legyen üres a név
+    const trimmedName = newName.trim();
+    if(trimmedName.length > 0) {
+        gameState.player.username = trimmedName;
+        showMessage(`Username changed to ${trimmedName}!`, 'success');
+    } else showMessage('Username cannot be empty!', 'error');
 };
 
 export const build = (buildingType) => {
@@ -155,17 +163,17 @@ export const loadGame = () => {
             }
         }
         
+        if  (savedState.player) gameState.player.username = savedState.player.username;
         if (savedState.resources) gameState.resources = savedState.resources;
         if (savedState.buildings) gameState.buildings = savedState.buildings;
         if (savedState.constructionQueue) gameState.constructionQueue = savedState.constructionQueue;
         gameState.lastSaveTime = savedState.lastSaveTime;
 
-        for (const type in gameState.buildingMeta) {
-            if (!gameState.buildings[type]) gameState.buildings[type] = [];
-        }
+        for (const type in gameState.buildingMeta) if (!gameState.buildings[type]) gameState.buildings[type] = [];
 
         return { loaded: true, offlineTime: offlineTimeInSeconds };
     }
+    
     return { loaded: false, offlineTime: 0 };
 };
 

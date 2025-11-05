@@ -24,32 +24,83 @@
     <!-- Toast container minden oldal tetején -->
     <div id="toast-container"></div>
 
+    <!-- ÚJ: PROFIL MODÁLIS ABLAK -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal-button" class="close-button">&times;</span>
+            <h2>Player Profile</h2>
+            <div class="modal-body">
+                <label for="username-input">Change Username</label>
+                <input type="text" id="username-input" placeholder="Enter new username..." />
+                <button id="save-username-button">Confirm</button>
+
+                <div class="danger-zone">
+                    <p>Warning: This action cannot be undone and will erase all your progress!</p>
+                    <button id="reset-game-button" class="danger-button">Reset Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ÚJ: Nyersanyagsáv a képernyő tetején -->
     <header id="resource-bar">
-        <div class="resource-item" title="Wood">
-            <img src="./assets/wood.png" width="25" height="25">
-            <strong><span id="wood">0</span> / <span id="wood-cap">0</span></strong>
+        <div id="profile-section">
+            <button id="profile-button" title="Profile">
+                <span id="player-name-display">Lord</span>
+            </button>
         </div>
 
-        <div class="resource-item" title="Stone">
-            <img src="./assets/stone.png" width="25" height="25">
-            <strong><span id="stone">0</span> / <span id="stone-cap">0</span></strong>
+        <div id="resources-section">
+            <div class="resource-item" title="Wood">
+                <img src="./assets/wood.png" width="25" height="25">
+                <div class="resource-text">
+                    <strong>
+                        <span id="wood">0</span>
+                        <span id="wood-cap">0</span>
+                    </strong>
+                </div>
+            </div>
+
+            <div class="resource-item" title="Stone">
+                <img src="./assets/stone.png" width="25" height="25">
+                <div class="resource-text">
+                    <strong>
+                        <span id="stone">0</span>
+                        <span id="stone-cap">0</span>
+                    </strong>
+                </div>
+            </div>
+
+            <div class="resource-item" title="Food">
+                <img src="./assets/food.png" width="25" height="25">
+                <div class="resource-text">
+                    <strong>
+                        <span id="food">0</span>
+                        <span id="food-cap">0</span>
+                    </strong>
+                </div>
+            </div>
+
+            <div class="resource-item" title="Gold">
+                <img src="./assets/gold.png" width="25" height="25">
+                <div class="resource-text">
+                    <strong>
+                        <span id="gold">0</span>
+                    </strong>
+                </div>
+            </div>
+
+            <div class="resource-item" title="Sapphire">
+                <img src="./assets/sapphire.png" width="25" height="25">
+                <div class="resource-text">
+                    <strong>
+                        <span id="sapphire">0</span>
+                    </strong>
+                </div>
+            </div>
         </div>
 
-        <div class="resource-item" title="Food">
-            <img src="./assets/food.png" width="25" height="25">
-            <strong><span id="food">0</span> / <span id="food-cap">0</span></strong>
-        </div>
-
-        <div class="resource-item" title="Gold">
-            <img src="./assets/gold.png" width="25" height="25">
-            <strong><span id="gold">0</span></strong>
-        </div>
-
-        <div class="resource-item" title="Sapphire">
-            <img src="./assets/sapphire.png" width="25" height="25">
-            <strong><span id="sapphire">0</span></strong>
-        </div>
+        <div id="right-section"></div>
     </header>
 
     <div id="game-container">
@@ -60,7 +111,7 @@
                         Medieval Empire
                     </a>
             </h1>
-            <p class="version-subtitle">version Alpha v1.2.3</p>
+            <p class="version-subtitle">version Alpha v1.2.4</p>
         </header>
 
         <nav>
@@ -75,11 +126,6 @@
                 <div id="building-list">
                     <!-- Az épületek ide kerülnek -->
                 </div>
-            </div>
-
-            <div id="actions-panel" class="panel">
-                <h2>Actions</h2>
-                <button id="reset-button">Reset Game</button>
             </div>
         </main>
 

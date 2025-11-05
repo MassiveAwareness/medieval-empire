@@ -20,7 +20,20 @@ export const showMessage = (msg, type) => {
     }, 4000);
 };
 
+/**
+ * Frissíti a profil gombján lévő nevet.
+ */
+function updateProfileButton() {
+    const nameDisplay = document.getElementById('player-name-display');
+    if(nameDisplay) nameDisplay.textContent = gameState.player.username;
+}
+
+/**
+ * Frissíti az összes, minden oldalon közös UI elemet.
+ */
 function updateSharedUI() {
+    updateProfileButton();
+
     const warehouseMeta = gameState.buildingMeta.warehouse;
     const keepMeta = gameState.buildingMeta.keep;
     let totalWarehouseLevel = 0;
