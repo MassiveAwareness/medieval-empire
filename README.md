@@ -4,20 +4,19 @@
   <img src="./assets/background.png" style="width: 40%" alt="Medieval Empire Banner">
 </div>
 
-**Alpha v1.2.1**
+**Alpha v1.2.3**
 
 ---
 
 <div align="center">
 
-A text-based empire-building and management game crafted with pure, vanilla HTML, CSS, and JavaScript (ES6 Modules).
+A text-based empire-building and management game crafted with pure, vanilla HTML, CSS, and JavaScript (ES6 Modules), featuring a unique medieval-fantasy visual theme.
 
 </div>
 
 <div align="center">
-  <img src="./assets/screenshot_dashboard.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot - Dashboard">
-  <img src="./assets/screenshot_buildings.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot - Buildings">
-  <img src="./assets/screenshot_keep.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot - The Keep">
+  <img src="./assets/screenshot_dashboard.png" style="width: 48%;" alt="Medieval Empire Gameplay Screenshot - Dashboard">
+  <img src="./assets/screenshot_buildings.png" style="width: 48%;" alt="Medieval Empire Gameplay Screenshot - Buildings">
 </div>
 
 ## Table of Contents
@@ -38,21 +37,23 @@ A text-based empire-building and management game crafted with pure, vanilla HTML
 
 ## Current Features
 
-- **Multi-Page Interface:** The game is structured across multiple pages for a clean and organized experience: a central `Dashboard`, a `Buildings` management page, and a dedicated page for the `Keep`.
-- **Offline Progression:** Your empire works for you even when you're away! The game calculates and awards resources generated while the browser was closed, rewarding you upon your return.
+- **Complete Visual Overhaul:** The game features a unique, dark medieval-fantasy theme with a custom color palette, atmospheric backgrounds, and unique fonts.
+- **Custom Graphics:** All resources are represented by custom-made icons, replacing generic font libraries for a more immersive and personalized experience.
+- **Multi-Page Interface:** The game is structured across multiple pages: a central `Dashboard`, a `Buildings` management page, and a dedicated page for the `Keep`.
+- **Offline Progression:** Your empire works for you even when you're away! The game calculates and awards resources generated while the browser was closed.
 - **Advanced Resource Management:** Automatically gather Wood, Stone, and Food. Manage your storage capacity by upgrading your `Warehouse` and `Keep`.
 - **Multiple Buildings:** Build up to 3 instances of each production building (Lumberyard, Quarry, Farm) to specialize your economy.
 - **Global Bonuses:** Construct a `Keep` to gain powerful empire-wide bonuses, such as increased storage capacity and reduced construction times.
-- **Time-Based Construction:** Upgrading buildings takes time. With only a single construction queue, strategic planning is essential. Maximum building levels are capped for balanced progression.
-- **Persistent & Automatic State:** All progress is automatically saved to the browser's `localStorage` when you leave the page, ensuring no progress is lost. A reset option is available for starting a new game.
-- **Polished UI/UX:** A custom, atmospheric user interface featuring non-intrusive toast notifications, a loading screen, and intelligent welcome messages for returning players.
-- **Modular Codebase:** The JavaScript is organized into logical, separate modules (`state`, `ui`, `gameLogic`, `app`), making the code clean, maintainable, and easy to extend.
+- **Time-Based Construction:** Upgrading buildings takes time with a single construction queue. Maximum building levels are capped for balanced progression.
+- **Persistent & Automatic State:** All progress is automatically saved to the browser's `localStorage` when you leave the page. A reset option is available.
+- **Polished UI/UX:** A custom user interface featuring non-intrusive toast notifications, a loading screen, and intelligent welcome messages for returning players.
+- **Modular Codebase:** The JavaScript is organized into logical, separate modules (`state`, `ui`, `gameLogic`, `app`), making the code clean and maintainable.
 
 ## How To Play
 
 1.  **Navigate Your Empire:** Use the navigation bar to switch between the Dashboard, Buildings, and Keep pages.
-2.  **Manage Resources:** Keep an eye on your resource generation and storage capacity on the top panel, which is visible on all pages.
-3.  **Build & Upgrade:** On the Buildings page, construct new production buildings or upgrade existing ones. Click the "Upgrade" button to start the construction process.
+2.  **Manage Resources:** Keep an eye on your resource generation and storage capacity on the fixed top panel, which is visible on all pages.
+3.  **Build & Upgrade:** On the Buildings page, construct new production buildings or upgrade existing ones by clicking the respective buttons.
 4.  **Plan Ahead:** You only have one builder! While one upgrade is in progress, you cannot start another. Prioritize your construction queue for maximum efficiency.
 5.  **Return for Rewards:** Your progress is saved automatically when you close the tab. Come back later to see the resources your empire has gathered in your absence.
 
@@ -61,7 +62,7 @@ A text-based empire-building and management game crafted with pure, vanilla HTML
 This project is proudly built on the fundamental building blocks of the web, without any external JavaScript frameworks.
 
 - **HTML5:** Provides the structure and content for the multiple pages of the game.
-- **CSS3:** Used for all visual styling, creating the medieval atmosphere, layout, and animations.
+- **CSS3:** Used for all visual styling, creating the medieval-fantasy atmosphere, layout, and effects.
 - **JavaScript (ES6+):** The engine for all game logic. It leverages ES6 Modules for a clean and organized codebase.
 
 ## Project Structure
@@ -77,10 +78,16 @@ The project follows a multi-page structure with shared assets, promoting code re
 |-- style.css           # Shared CSS file for all pages.
 |-- README.md           # This documentation file.
 |
-|-- /assets/            # Renamed from /images/ for better clarity
+|-- /assets/
 |   |-- background.png  # The main background image for the game.
-|   |-- screenshot.png  # The screenshot used above.
+|   |-- screenshot_dashboard.png # Screenshots used above.
+|   |-- screenshot_buildings.png
 |   |-- favicon.ico     # Favicon of the website.
+|   |-- wood.png        # Custom resource icons.
+|   |-- stone.png
+|   |-- food.png
+|   |-- gold.png
+|   |-- sapphire.png
 |
 |-- /js/
     |-- app.js          # MAIN ENTRY POINT: Manages loading, initializes the game, and sets up page-specific event listeners.
@@ -127,9 +134,9 @@ The game is currently in its Alpha stage, but the plans are ambitious. The follo
   - [ ] **Missions & Raids:** Ability to send troops on missions to acquire loot.
   - [ ] **Events:** Random events (e.g., "Bandit Attack," "Bountiful Harvest") that provide challenges or bonuses.
 
-- [ ] **Phase 4: Polish & Refinement**
+- [x] **Phase 4: Polish & Refinement (In Progress)**
   - [x] **Offline Progression:** Calculate and award resources generated while offline.
-  - [ ] **UI/UX Enhancements:** Add tooltips, better visual feedback, and animations.
+  - [x] **UI/UX Enhancements:** Complete visual overhaul, custom icons, toast notifications.
   - [ ] **Sound & Music:** Implement basic sound effects and atmospheric background music.
   - [ ] **Game Balancing:** Fine-tune all costs, timers, and production rates for the best player experience.
 
