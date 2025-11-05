@@ -112,19 +112,44 @@ export const saveGame = () => {
 
 export const loadGame = () => {
     const savedStateJSON = localStorage.getItem('gameState');
-    if(savedStateJSON) {
+    if (savedStateJSON) {
         let savedState = JSON.parse(savedStateJSON);
 
-        if(savedState.resources) gameState.resources = savedState.resources;
-        if(savedState.buildings) gameState.buildings = savedState.buildings;
-        if(savedState.constructionQueue) gameState.constructionQueue = savedState.constructionQueue;
+        // --- ÚJ, KONVERTÁLÓ BETÖLTÉSI LOGIKA ---
+        
+        // Először betöltjük az egyszerűbb adatokat.
+        if (savedState.resources) gameState.resources = savedState.resources;
+        if (savedState.constructionQueue) gameState.constructionQueue = savedState.constructionQueue;
 
-        for(const type in gameState.buildingMeta) if(!gameState.buildings[type]) gameState.buildings[type] = [];
+        // Most jön a trükkös rész: az épületek betöltése és konvertálása.
+        if (savedState.buildings) {
+            // Végigmegyünk az összes épülettípuson, amit a játék ismer.
+            for (const type in gameState.buildingMeta) {
+                // Ha a mentésben létezik ez a típus...
+                if (savedState.buildings[type]) {
+                    // ...és TÖMB-ként van elmentve (új mentési formátum)...
+                    if (Array.isArray(savedState.buildings[type])) {
+                        gameState.buildings[type] = savedState.buildings[type];
+                    } 
+                    // ...vagy OBJEKTUM-ként van elmentve (régi mentési formátum)...
+                    else {
+                        // ...akkor átalakítjuk egy egyelemű tömbbé.
+                        gameState.buildings[type] = [savedState.buildings[type]];
+                    }
+                }
+            }
+        }
+        
+        // Biztonsági ellenőrzés: ha egy új épületet adunk a játékhoz, a régi mentés ne omoljon össze.
+        for (const type in gameState.buildingMeta) {
+            if (!gameState.buildings[type]) {
+                gameState.buildings[type] = [];
+            }
+        }
 
         showMessage('Game state loaded successfully!', 'success');
         return true;
     }
-
     return false;
 };
 
