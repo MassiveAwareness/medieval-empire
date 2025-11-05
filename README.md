@@ -108,7 +108,7 @@ The game is currently in its Alpha stage, but the plans are ambitious. The follo
   - [x] Code modularization
 
 - [ ] **Phase 2: Content Expansion**
-  - [ ] **Warehouse:** Introduce a resource cap that can be upgraded.
+  - [x] **Warehouse:** Introduce a resource cap that can be upgraded.
   - [ ] **Barracks:** Allow for the training of military units.
   - [ ] **Marketplace:** Generate a new resource: Gold.
   - [ ] **Unit Upkeep:** Military units will consume Gold and/or Food, adding a new layer of management.
