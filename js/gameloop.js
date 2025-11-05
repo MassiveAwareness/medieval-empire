@@ -1,41 +1,47 @@
-import { showMessage, updateDisplay } from './ui.js';
-import { upgradeBuilding, gameLoop, saveGame, loadGame, resetGame } from './gameLogic.js';
+import { updateDisplay, showMessage } from './ui.js';
+import { build, upgrade, gameLoop, saveGame, loadGame, resetGame } from './gameLogic.js';
 
 if(history.scrollRestoration) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
 window.addEventListener('DOMContentLoaded', () => {
-
-    // --- Töltőképernyő logika ---
     const handleLoadingScreen = () => {
         const loadingScreen = document.getElementById('loading-screen');
         const progressBar = document.getElementById('progress-bar-inner');
 
-        // Betöltés szimulációja
-        setTimeout(() => { progressBar.style.width = '30%' }, 500);
-        setTimeout(() => { progressBar.style.width = '70%' }, 1800);
+        setTimeout(() => { progressBar.style.width = '30%' }, 900);
+        setTimeout(() => { progressBar.style.width = '70%' }, 2100);
         setTimeout(() => { progressBar.style.width = '100%' }, 3000);
 
-        // Eltűnik a töltőképernyőt és elindul a játék
         setTimeout(() => {
             loadingScreen.classList.add('hidden');
             initializeGame();
         }, 3500);
     };
 
-    // --- Játék inicializálása ---
     const initializeGame = () => {
-        // Eseménykezelők beállítása
-        document.getElementById('upgrade-lumberyard').addEventListener('click', () => upgradeBuilding('lumberyard'));
-        document.getElementById('upgrade-quarry').addEventListener('click', () => upgradeBuilding('quarry'));
-        document.getElementById('upgrade-farm').addEventListener('click', () => upgradeBuilding('farm'));
-        // ÚJ: Raktár gomb bekötése
-        document.getElementById('upgrade-warehouse').addEventListener('click', () => upgradeBuilding('warehouse'));
+        // Eseménykezelés a szülő elemen (Event Delegation)
+        const buildingList = document.getElementById('building-list');
+        if(buildingList) {
+            buildingList.addEventListener('click', (event) => {
+                const target = event.target;
+
+                if(target.classList.contains('upgrade-button')) {
+                    const type = target.dataset.type;
+                    const index = parseInt(target.dataset.index, 10);
+                    upgrade(type, index);
+                }
+
+                if(target.classList.contains('build-building-button')) {
+                    const type = target.dataset.type;
+                    build(type);
+                }
+            });
+        }
 
         document.getElementById('save-button').addEventListener('click', saveGame);
         document.getElementById('reset-button').addEventListener('click', resetGame);
 
-        // Játék betöltése és indítása
         const wasGameLoaded = loadGame();
         updateDisplay();
 
@@ -43,7 +49,5 @@ window.addEventListener('DOMContentLoaded', () => {
         setInterval(gameLoop, 1000);
     };
 
-    // --- Belépési pont ---
-    // A szkript betöltődésekor elindítjuk a töltőképernyő kezelését
     handleLoadingScreen();
 });

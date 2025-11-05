@@ -1,29 +1,42 @@
 import { gameState, setGameState } from './state.js';
-import { showMessage, updateDisplay, capitalizeFirstLetter } from './ui.js';
+import { showMessage, updateDisplay, capitalizeLetter } from './ui.js';
 
-// --- Építési logika ---
-export const upgradeBuilding = (buildingName) => {
-    // 1. A legfontosabb ellenőrzés: Dolgozik-e az építő?
-    // Ez minden más feltételt felülír.
+export const build = (buildingType) => {
+    const instances = gameState.buildings[buildingType];
+    const meta = gameState.buildingMeta[buildingType];
+
     if(gameState.constructionQueue.length > 0) {
         showMessage('Your builder is already working!', 'error');
         return;
     }
 
-    const building = gameState.buildings[buildingName];
+    if(instances.length < meta.maxInstances) {
+        // Jövőbeli fejlesztés: itt lesz majd a költségek és építési idők átadása az új épületeknek...
+        instances.push({ level: 1 });
+        showMessage(`A new ${meta.name} has been built!`, 'success');
+        updateDisplay();
+    } else {
+        showMessage(`You have reached the maximum number of ${meta.name}s!`, 'error');
+    }
+};
 
-    // 2. Második ellenőrzés: Az adott épület elérte-e a max szintet?
-    if (building.level >= building.maxLevel) {
+export const upgrade = (buildingType, index) => {
+    const building = gameState.buildings[buildingType][index];
+    const meta = gameState.buildingMeta[buildingType];
+
+    if(gameState.constructionQueue.length > 0) {
+        showMessage('Your builder is already working!', 'error');
+        return;
+    }
+
+    if(building.level >= meta.maxLevel) {
         showMessage('This building has reached its maximum level!', 'error');
         return;
     }
 
-    // 3. Harmadik ellenőrzés: Van-e elég nyersanyag?
     const currentLevel = building.level;
     const cost = {};
-    for(const resource in building.cost) {
-        cost[resource] = Math.floor(building.cost[resource] * Math.pow(1.5, currentLevel));
-    }
+    for(const resource in meta.cost) cost[resource] = Math.floor(meta.cost[resource] * Math.pow(1.5, currentLevel));
 
     let canAfford = true;
     for(const resource in cost) {
@@ -36,64 +49,55 @@ export const upgradeBuilding = (buildingName) => {
     if(canAfford) {
         for(const resource in cost) gameState.resources[resource] -= cost[resource];
 
-        const constructionTime = building.baseConstructionTime * (currentLevel + 1);
+        const constructionTime = meta.baseConstructionTime * (currentLevel + 1);
         const finishTime = Date.now() + constructionTime * 1000;
-        gameState.constructionQueue.push({ buildingName, finishTime });
-        const displayName = capitalizeFirstLetter(buildingName);
-        showMessage(`${displayName}'s upgrade has started! Time: ${constructionTime}s`, 'success');
-    } else showMessage(`Insufficient material for upgrade!`, 'error');
+
+        gameState.constructionQueue.push({ buildingType, index, finishTime });
+
+        showMessage(`${meta.name} #${index + 1} upgrade has started! Time: ${constructionTime}s`, 'success');
+    } else showMessage('Insufficient material for upgrade!', 'error');
 
     updateDisplay();
 };
 
-// --- Game loop ---
 export const gameLoop = () => {
-    // 1. LÉPÉS: ÉPÍTÉSI SOR KEZELÉSE (ez változatlan)
     const now = Date.now();
     const completedJobs = [];
+
     gameState.constructionQueue.forEach(job => {
         if(now >= job.finishTime) {
-            gameState.buildings[job.buildingName].level++;
-            const displayName = capitalizeFirstLetter(job.buildingName);
-            showMessage(`${displayName}'s upgrade has finished!`, 'success');
+            gameState.buildings[job.buildingType][job.index].level++;
+            const meta = gameState.buildingMeta[job.buildingType];
+            showMessage(`${meta.name} #${job.index + 1} upgrade has finished!`, 'success');
             completedJobs.push(job);
         }
     });
 
-    if(completedJobs.length > 0) {
-        gameState.constructionQueue = gameState.constructionQueue.filter(job => !completedJobs.includes(job));
-    }
+    if(completedJobs.length > 0) gameState.constructionQueue = gameState.constructionQueue.filter(job => !completedJobs.includes(job));
 
-    // --- NYERSANYAG TERMELÉS ÉS LIMITÁLÁS ---
-
-    // 2. LÉPÉS: AKTUÁLIS KAPACITÁS KISZÁMOLÁSA
-    const warehouse = gameState.buildings.warehouse;
-    const warehouseLevel = warehouse ? warehouse.level : 0;
-    const warehouseStorageIncrease = warehouse ? warehouse.baseStorageIncrease : 0;
+    const warehouseMeta = gameState.buildingMeta.warehouse;
+    let totalWarehouseLevel = 0;
+    gameState.buildings.warehouse.forEach(w => totalWarehouseLevel += w.level);
 
     const caps = {
-        wood: gameState.baseStorage.wood + (warehouseLevel * warehouseStorageIncrease),
-        stone: gameState.baseStorage.stone + (warehouseLevel * warehouseStorageIncrease),
-        food: gameState.baseStorage.food + (warehouseLevel * warehouseStorageIncrease)
+        wood: gameState.baseStorage.wood + (totalWarehouseLevel * warehouseMeta.baseStorageIncrease),
+        stone: gameState.baseStorage.stone + (totalWarehouseLevel * warehouseMeta.baseStorageIncrease),
+        food: gameState.baseStorage.food + (totalWarehouseLevel * warehouseMeta.baseStorageIncrease)
     };
 
-    // 3. LÉPÉS: TERMELÉS HOZZÁADÁSA
-    // (Csak akkor termelünk, ha a jelenlegi mennyiség kisebb a kapacitásnál)
-    for(const buildingName in gameState.buildings) {
-        const building = gameState.buildings[buildingName];
-        if(building.level > 0) {
-            if(buildingName === 'lumberyard' && gameState.resources.wood < caps.wood) {
-                gameState.resources.wood += building.level * building.baseProduction;
-            } else if(buildingName === 'quarry' && gameState.resources.stone < caps.stone) {
-                gameState.resources.stone += building.level * building.baseProduction;
-            } else if(buildingName === 'farm' && gameState.resources.food < caps.food) {
-                gameState.resources.food += building.level * building.baseProduction;
-            }
-        }
-    }
+    let totalWoodProduction = 0;
+    gameState.buildings.lumberyard.forEach(b => totalWoodProduction += b.level * gameState.buildingMeta.lumberyard.baseProduction);
 
-    // 4. LÉPÉS: A LIMIT KIKÉNYSZERÍTÉSE (DUPLA BIZTONSÁG)
-    // A Math.min() biztosítja, hogy az érték SOHA ne lépje túl a kapacitást.
+    let totalStoneProduction = 0;
+    gameState.buildings.quarry.forEach(b => totalStoneProduction += b.level * gameState.buildingMeta.quarry.baseProduction);
+
+    let totalFoodProduction = 0;
+    gameState.buildings.farm.forEach(b => totalFoodProduction += b.level * gameState.buildingMeta.farm.baseProduction);
+
+    if(gameState.resources.wood < caps.wood) gameState.resources.wood += totalWoodProduction;
+    if(gameState.resources.stone < caps.stone) gameState.resources.stone += totalStoneProduction;
+    if(gameState.resources.food < caps.food) gameState.resources.food += totalFoodProduction;
+
     gameState.resources.wood = Math.min(gameState.resources.wood, caps.wood);
     gameState.resources.stone = Math.min(gameState.resources.stone, caps.stone);
     gameState.resources.food = Math.min(gameState.resources.food, caps.food);
@@ -101,7 +105,6 @@ export const gameLoop = () => {
     updateDisplay();
 };
 
-// --- Mentés / betöltés ---
 export const saveGame = () => {
     localStorage.setItem('gameState', JSON.stringify(gameState));
     showMessage('Game state saved successfully!', 'success');
@@ -112,23 +115,12 @@ export const loadGame = () => {
     if(savedStateJSON) {
         let savedState = JSON.parse(savedStateJSON);
 
-        if (savedState.resources) gameState.resources = savedState.resources;
-        if (savedState.buildings) gameState.buildings = savedState.buildings;
-        if (savedState.constructionQueue) gameState.constructionQueue = savedState.constructionQueue;
+        if(savedState.resources) gameState.resources = savedState.resources;
+        if(savedState.buildings) gameState.buildings = savedState.buildings;
+        if(savedState.constructionQueue) gameState.constructionQueue = savedState.constructionQueue;
 
-        // Biztonsági ellenőrzések, hogy a régi mentés kompatibilis legyen az új épületekkel.
-        // Ha a betöltött "buildings" objektumban nincs "warehouse", hozzáadjuk az alapértelmezettet.
-        if (!gameState.buildings.warehouse) {
-            gameState.buildings.warehouse = {
-                level: 1,
-                baseStorageIncrease: 500,
-                cost: { wood: 100, stone: 50 },
-                baseConstructionTime: 15
-            };
-        }
+        for(const type in gameState.buildingMeta) if(!gameState.buildings[type]) gameState.buildings[type] = [];
 
-        // A setGameState függvénnyel biztonságos felülírás hajtódhat végre
-        setGameState(Object.assign(gameState, savedState));
         showMessage('Game state loaded successfully!', 'success');
         return true;
     }
@@ -139,5 +131,5 @@ export const loadGame = () => {
 export const resetGame = () => {
     localStorage.removeItem('gameState');
     showMessage('Saved game state was deleted! Game resets...', 'success');
-    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); location.reload(); }, 3000);
+    setTimeout(() => { location.reload(); }, 3000);
 };
