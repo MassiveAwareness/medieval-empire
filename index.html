@@ -6,6 +6,10 @@
     <title>Medieval Empire</title>
     <link rel="stylesheet" href="./css/layout.css" />
     <link rel="icon" type="ico/image" href="./assets/favicon.ico" />
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=MedievalSharp&display=swap"
+        rel="stylesheet"
+    />
 
 </head>
 
@@ -19,6 +23,34 @@
 
     <!-- Toast container minden oldal tetején -->
     <div id="toast-container"></div>
+
+    <!-- ÚJ: Nyersanyagsáv a képernyő tetején -->
+    <header id="resource-bar">
+        <div class="resource-item" title="Wood">
+            <img src="./assets/wood.png" width="25" height="25">
+            <strong><span id="wood">0</span> / <span id="wood-cap">0</span></strong>
+        </div>
+
+        <div class="resource-item" title="Stone">
+            <img src="./assets/stone.png" width="25" height="25">
+            <strong><span id="stone">0</span> / <span id="stone-cap">0</span></strong>
+        </div>
+
+        <div class="resource-item" title="Food">
+            <img src="./assets/food.png" width="25" height="25">
+            <strong><span id="food">0</span> / <span id="food-cap">0</span></strong>
+        </div>
+
+        <div class="resource-item" title="Gold">
+            <img src="./assets/gold.png" width="25" height="25">
+            <strong><span id="gold">0</span></strong>
+        </div>
+
+        <div class="resource-item" title="Sapphire">
+            <img src="./assets/sapphire.png" width="25" height="25">
+            <strong><span id="sapphire">0</span></strong>
+        </div>
+    </header>
     
     <div id="game-container">
         <header>
@@ -28,7 +60,7 @@
                 </a>
             </h1>
 
-            <p class="version-subtitle">version Alpha v1.2.2</p>
+            <p class="version-subtitle">version Alpha v1.2.3</p>
         </header>
 
         <nav>
@@ -36,15 +68,6 @@
             <a href="./buildings.html">Buildings</a>
             <a href="./keep.html">The Keep</a>
         </nav>
-
-        <div id="resources-panel" class="panel">
-            <h2>Resources</h2>
-            <p><strong>Wood: <span id="wood">0</span> / <span id="wood-cap">0</span></strong></p>
-            <p><strong>Stone: <span id="stone">0</span> / <span id="stone-cap">0</span></strong></p>
-            <p><strong>Food: <span id="food">0</span> / <span id="food-cap">0</span></strong></p>
-            <p><strong>Gold: <span id="gold">0</span></strong></p>
-            <p><strong>Sapphire: <span id="sapphire">0</strong></p>
-        </div>
 
         <main>
             <div class="panel">

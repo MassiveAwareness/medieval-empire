@@ -1,14 +1,15 @@
 html, body {
-    background-color: #3d2c1d;
-    background-image: url('../assets/background.png');
+    /* MISZTIKUS HÁTTÉR ÉS SZÍNEK */
+    background-color: #1a1e2b; /* Nagyon sötét, éjszakai kék/fekete */
+    background-image: url('../assets/background.png'); /* A meglévő, átalakított kép, ha van */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    color: #e0dcd1;
-    font-family: 'Georgia', serif;
+    color: #e0e6ec; /* Világosabb, hidegebb fehér a szövegnek */
+    font-family: 'Lora', serif; /* Elegánsabb, de még rusztikus betűtípus */
     margin: 0;
-    padding: 40px 0;
+    padding: 80px 0 40px 0;
     min-height: 100vh;
     box-sizing: border-box;
     scrollbar-width: none;
@@ -20,17 +21,53 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+/* --- RÖGZÍTETT ERŐFORRÁS SÁV --- */
+#resource-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Kicsit magasabb sáv */
+    background-color: rgba(18, 22, 36, 0.95); /* Áttetszőbb, sötétebb kék */
+    border-bottom: 3px solid #3c5a6e; /* Mélyebb türkiz/kék határ */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7); /* Erősebb árnyék */
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    /* Extra misztikus effekt: finom textúra vagy glow */
+    /* background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)); */ /* finom textúra */
+}
+
+#resource-bar .resource-item {
+    color: #e0e6ec; /* Világosabb szöveg */
+    font-size: 1.2em; /* Kicsit nagyobb betűméret */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Kicsit nagyobb rés az ikon és a szöveg között */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* Text shadow a jobb olvashatóságért */
+}
+
+#resource-bar .resource-item i {
+    color: #6ed0e6; /* Élénkebb türkiz az ikonoknak (ha Font Awesome) */
+    font-size: 1.5em; /* Nagyobb ikonok */
+    /* Ha a generált ikonjaidat használod, akkor itt képként kell beilleszteni */
+    /* Példa: background-image: url('path/to/icon.png'); background-size: contain; width: 24px; height: 24px; */
+}
+
 #game-container {
-    width: 800px;
+    width: 850px; /* Kicsit szélesebb konténer */
     margin: 0 auto;
-    border: 5px solid #8c6a46;
-    background-color: #c4a787;
-    color: #3d2c1d;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.7);
-    /* A töltőképernyőhöz kell */
-    display: none; 
+    border: 5px solid #3c5a6e; /* Ugyanaz a mélyebb türkiz/kék szegély */
+    background-color: rgba(44, 62, 80, 0.9); /* Áttetszőbb sötétkék háttér */
+    color: #e0e6ec; /* Világosabb szöveg a konténerben */
+    border-radius: 12px; /* Kicsit kerekebb sarkok */
+    padding: 25px; /* Kicsit több belső tér */
+    box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 10px rgba(110, 208, 230, 0.2); /* Erősebb külső és finom belső glow árnyék */
+    display: none;
+    backdrop-filter: blur(3px); /* Enyhe háttérhomály a misztikusabb érzetért */
 }
 
 #game-container.loaded {
@@ -39,121 +76,213 @@ body::-webkit-scrollbar {
 
 header h1 {
     text-align: center;
-    color: #5a3d21;
-    border-bottom: 2px solid #8c6a46;
-    padding-bottom: 10px;
+    color: #6ed0e6; /* Élénkebb türkiz cím */
+    border-bottom: 2px solid #3c5a6e; /* Ugyanaz a sáv határ szín */
+    padding-bottom: 12px; /* Kicsit több padding */
     margin-top: 0;
+    font-family: 'MedievalSharp', cursive; /* Vagy más misztikus/középkori font */
+    font-size: 2.8em; /* Nagyobb cím */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
 }
 
-/* --- NAVIGÁCIÓS SÁV --- */
+/* --- Navigációs sáv stílusai --- */
 nav {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px; /* Nagyobb rés a gombok között */
+    margin-bottom: 25px; /* Kicsit több tér alul */
 }
 
 nav a {
-    background-color: #5a3d21;
-    color: #e0dcd1;
-    padding: 10px 20px;
-    border-radius: 5px;
+    background-color: #2c3e50; /* Sötétebb kék gomb háttér */
+    color: #e0e6ec; /* Világos szöveg */
+    padding: 12px 25px; /* Nagyobb gombok */
+    border-radius: 8px; /* Kerekebb gombok */
     text-decoration: none;
-    border: 2px solid #3d2c1d;
-    transition: background-color 0.2s, transform 0.2s;
+    border: 2px solid #3c5a6e; /* Türkiz szegély */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Finomabb átmenetek */
+    font-weight: bold;
+    text-transform: uppercase; /* Nagybetűs gomb szöveg */
+    letter-spacing: 1px; /* Kicsit szélesebb betűköztávolság */
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
 }
 
 nav a:hover {
-    background-color: #8c6a46;
-    transform: translateY(-2px);
+    background-color: #3c5a6e; /* Világosabb türkiz hover */
+    transform: translateY(-3px); /* Enyhén feljebb mozdul */
+    box-shadow: 3px 3px 12px rgba(0,0,0,0.6); /* Erősebb árnyék hoveren */
 }
 
 nav a.active {
-    background-color: #c4a787;
-    color: #3d2c1d;
-    border-color: #5a3d21;
+    background-color: #6ed0e6; /* Élénk türkiz aktív gomb */
+    color: #1a1e2b; /* Sötétebb szöveg az aktív gombhoz */
+    border-color: #2c3e50; /* Sötétebb szegély */
     font-weight: bold;
     pointer-events: none;
+    transform: translateY(0);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* Belső árnyék az aktív gombnak */
 }
 
-main {
-    margin-top: 20px;
-}
+main { margin-top: 25px; } /* Kicsit több tér fent */
 
 .panel {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
+    margin-bottom: 25px; /* Kicsit több tér alul */
+    padding: 20px; /* Több belső tér */
+    background-color: rgba(26, 30, 43, 0.6); /* Áttetszőbb sötétkék panel háttér */
+    border-radius: 8px; /* Kerekebb sarkok */
+    border: 1px solid #3c5a6e; /* Türkiz szegély */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
+/* --- A többi stílus --- */
 .building-type-container {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #8c6a46;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #3c5a6e; /* Türkiz elválasztó */
 }
-.building-type-container:last-child {
-    border-bottom: none;
-}
+
+.building-type-container:last-child { border-bottom: none; }
 
 .building {
-    border: 1px solid #8c6a46;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
+    border: 1px solid #3c5a6e; /* Türkiz szegély */
+    padding: 15px; /* Több belső tér */
+    margin-top: 15px;
+    border-radius: 8px; /* Kerekebb sarkok */
+    background-color: rgba(26, 30, 43, 0.4); /* Enyhén sötétebb háttér */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
 }
 
 button {
-    background-color: #5a3d21;
-    color: #e0dcd1;
-    border: 2px solid #3d2c1d;
-    padding: 8px 15px;
-    border-radius: 5px;
+    background-color: #2c3e50; /* Sötétkék gomb */
+    color: #e0e6ec; /* Világos szöveg */
+    border: 2px solid #3c5a6e; /* Türkiz szegély */
+    padding: 10px 20px; /* Nagyobb gombok */
+    border-radius: 8px; /* Kerekebb sarkok */
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.2s;
-    margin-top: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.4);
 }
 
 button:hover {
-    background-color: #8c6a46;
+    background-color: #3c5a6e; /* Türkiz hover */
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
 button:disabled {
-    background-color: #8c6a46;
-    opacity: 0.6;
+    background-color: #5b7a8d; /* Szürkésebb kék disabled */
+    opacity: 0.5;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
 }
 
 .cost {
-    font-size: 0.9em;
+    font-size: 1em; /* Kicsit nagyobb költség szöveg */
     font-style: italic;
-    margin-top: 5px;
-    color: #5a3d21;
+    margin-top: 8px;
+    color: #6ed0e6; /* Élénk türkiz költség szöveg */
+    text-shadow: 0 0 3px rgba(0,0,0,0.4);
 }
 
-header h1 a { color: inherit; text-decoration: none; transition: text-decoration 0.2s; }
-header h1 a:hover { text-decoration: underline; }
-.version-subtitle { text-align: center; margin: -10px 0 15px 0; font-size: 0.9em; font-style: italic; color: #5a3d21; opacity: 0.8; }
+header h1 a {
+    color: inherit;
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+}
+
+header h1 a:hover {
+    text-decoration: underline;
+}
+
+.version-subtitle {
+    text-align: center;
+    margin: -10px 0 20px 0; /* Kicsit több tér */
+    font-size: 0.95em;
+    font-style: italic;
+    color: #6ed0e6; /* Élénk türkiz */
+    opacity: 0.8;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
 
 footer {
     text-align: center;
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 2px solid #8c6a46;
-    font-size: 0.8em;
-    color: #5a3d21;
+    margin-top: 30px; /* Több tér alul */
+    padding-top: 20px;
+    border-top: 2px solid #3c5a6e; /* Türkiz elválasztó */
+    font-size: 0.85em;
+    color: #6ed0e6; /* Élénk türkiz */
+    opacity: 0.7;
 }
 
-/* --- TOAST NOTIFICATION STÍLUSOK --- */
-#toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
-.toast { background-color: #c4a787; color: #3d2c1d; padding: 15px 20px; border-radius: 5px; border: 2px solid #5a3d21; box-shadow: 0 4px 8px rgba(0,0,0,0.4); font-family: 'Georgia', serif; }
-.toast.success { border-left: 5px solid #4F8A10; }
-.toast.error { border-left: 5px solid #D8000C; }
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Kicsit több rés a toastok között */
+}
 
-/* --- TÖLTŐKÉPERNYŐ STÍLUSOK --- */
-#loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #1a1a1a; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #e0dcd1; font-size: 1.5em; transition: opacity 0.5s ease-out; }
-.progress-bar { width: 300px; height: 20px; background-color: #3d2c1d; border: 2px solid #8c6a46; border-radius: 5px; margin-top: 20px; }
-.progress-bar-inner { height: 100%; width: 0%; background-color: #c4a787; border-radius: 3px; transition: width 0.3s ease-out; }
-#loading-screen.hidden { opacity: 0; pointer-events: none; }
+.toast {
+    background-color: rgba(44, 62, 80, 0.95); /* Sötétebb, áttetszőbb toast háttér */
+    color: #e0e6ec; /* Világos szöveg */
+    padding: 18px 25px; /* Nagyobb toastok */
+    border-radius: 8px; /* Kerekebb sarkok */
+    border: 2px solid #3c5a6e; /* Türkiz szegély */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6); /* Erősebb árnyék */
+    font-family: 'Lora', serif;
+    backdrop-filter: blur(2px); /* Enyhe háttérhomály */
+}
+
+.toast.success { border-left: 5px solid #27ae60; } /* Élénkebb zöld sikerhez */
+.toast.error { border-left: 5px solid #e74c3c; } /* Élénkebb piros hibához */
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(18, 22, 36, 0.98); /* Nagyon sötét, enyhén áttetsző betöltő képernyő */
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #6ed0e6; /* Élénk türkiz betöltő szöveg */
+    font-size: 1.8em; /* Nagyobb betöltő szöveg */
+    transition: opacity 0.5s ease-out;
+    font-family: 'MedievalSharp', cursive; /* Vagy 'Lora', serif */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+
+.progress-bar {
+    width: 350px; /* Szélesebb progress bar */
+    height: 25px; /* Magasabb progress bar */
+    background-color: #2c3e50; /* Sötétkék háttér */
+    border: 2px solid #3c5a6e; /* Türkiz szegély */
+    border-radius: 6px; /* Kerekebb sarkok */
+    margin-top: 25px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+.progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background-color: #6ed0e6; /* Élénk türkiz progresszív sáv */
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+    /* Enyhe gradiens vagy textúra a progresszív sávnak */
+    /* background-image: linear-gradient(45deg, #6ed0e6, #4ac4d8); */
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

@@ -36,6 +36,7 @@ function updateSharedUI() {
     for (const resource in gameState.resources) {
         const amountElement = document.getElementById(`${resource}`);
         if (amountElement) amountElement.textContent = Math.floor(gameState.resources[resource]);
+        
         if (caps[resource] !== undefined) {
             const capElement = document.getElementById(`${resource}-cap`);
             if (capElement) capElement.textContent = caps[resource];

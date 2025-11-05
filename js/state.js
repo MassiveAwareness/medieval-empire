@@ -1,13 +1,13 @@
 export let gameState = {
     lastSaveTime: null,
     baseStorage: { wood: 1500, stone: 1500, food: 1500 },
-    resources: { wood: 50, stone: 20, food: 100, gold: 0, sapphire: 0 },
+    resources: { wood: 50, stone: 20, food: 100, gold: 1_000, sapphire: 60 },
     buildings: {
         lumberyard: [{ level: 1 }],
         quarry: [{ level: 1 }],
         farm: [{ level: 1 }],
-        warehouse: [{ level: 0 }],
-        keep: [{ level: 0 }]
+        warehouse: [{ level: 1 }],
+        keep: [{ level: 1 }]
     },
     buildingMeta: {
         lumberyard: {
