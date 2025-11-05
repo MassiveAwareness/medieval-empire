@@ -83,6 +83,7 @@ The project follows a multi-page structure with shared assets, promoting code re
 |   |-- background.png  # The main background image for the game.
 |   |-- screenshot_dashboard.png # Screenshots used above.
 |   |-- screenshot_buildings.png
+|   |-- screenshot_keep.png
 |   |-- favicon.ico     # Favicon of the website.
 |   |-- wood.png        # Custom resource icons.
 |   |-- stone.png
@@ -91,7 +92,7 @@ The project follows a multi-page structure with shared assets, promoting code re
 |   |-- sapphire.png
 |
 |-- /js/
-    |-- app.js          # MAIN ENTRY POINT: Manages loading, initializes the game, and sets up page-specific event listeners.
+    |-- gameloop.js     # MAIN ENTRY POINT: Manages loading, initializes the game, and sets up page-specific event listeners.
     |-- state.js        # The central brain of the game, contains the gameState object and building meta-data.
     |-- ui.js           # Handles all DOM manipulation (UI rendering, toast notifications).
     |-- gameLogic.js    # The core gameplay logic: building, upgrading, saving/loading, and the main gameLoop.
