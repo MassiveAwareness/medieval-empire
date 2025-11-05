@@ -15,7 +15,9 @@ A text-based empire-building and management game crafted with pure, vanilla HTML
 </div>
 
 <div align="center">
-  <img src="./assets/screenshot.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot">
+  <img src="./assets/screenshot_dashboard.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot - Dashboard">
+  <img src="./assets/screenshot_buildings.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot - Buildings">
+  <img src="./assets/screenshot_keep.png" style="width: 40%" alt="Medieval Empire Gameplay Screenshot - The Keep">
 </div>
 
 ## Table of Contents
