@@ -17,6 +17,7 @@ A text-based empire-building and management game crafted with pure, vanilla HTML
 <div align="center">
   <img src="./assets/screenshot_dashboard.png" style="width: 48%;" alt="Medieval Empire Gameplay Screenshot - Dashboard">
   <img src="./assets/screenshot_buildings.png" style="width: 48%;" alt="Medieval Empire Gameplay Screenshot - Buildings">
+  <img src="./assets/screenshot_keep.png" style="width: 48%;" alt="Medieval Empire Gameplay Screenshot - Buildings">
 </div>
 
 ## Table of Contents
@@ -70,18 +71,21 @@ This project is proudly built on the fundamental building blocks of the web, wit
 The project follows a multi-page structure with shared assets, promoting code reusability and organization.
 
 ```graphql
-/MedievalEmpire/
+/medieval-empire/
 |
 |-- index.html          # Main dashboard page.
 |-- buildings.html      # Page for managing all buildings.
 |-- keep.html           # Page dedicated to the Keep.
-|-- style.css           # Shared CSS file for all pages.
 |-- README.md           # This documentation file.
+|
+|-- /css/
+|   |-- layout.css           # Shared CSS file for all pages.
 |
 |-- /assets/
 |   |-- background.png  # The main background image for the game.
 |   |-- screenshot_dashboard.png # Screenshots used above.
 |   |-- screenshot_buildings.png
+|   |-- screenshot_keep.png
 |   |-- favicon.ico     # Favicon of the website.
 |   |-- wood.png        # Custom resource icons.
 |   |-- stone.png
@@ -90,7 +94,7 @@ The project follows a multi-page structure with shared assets, promoting code re
 |   |-- sapphire.png
 |
 |-- /js/
-    |-- app.js          # MAIN ENTRY POINT: Manages loading, initializes the game, and sets up page-specific event listeners.
+    |-- gameloop.js     # MAIN ENTRY POINT: Manages loading, initializes the game, and sets up page-specific event listeners.
     |-- state.js        # The central brain of the game, contains the gameState object and building meta-data.
     |-- ui.js           # Handles all DOM manipulation (UI rendering, toast notifications).
     |-- gameLogic.js    # The core gameplay logic: building, upgrading, saving/loading, and the main gameLoop.
