@@ -1,5 +1,3 @@
-// js/app.js
-
 if (history.scrollRestoration) {
     history.scrollRestoration = 'manual';
 }
@@ -7,6 +5,11 @@ window.scrollTo(0, 0);
 
 import { updateDisplay, showMessage } from './ui.js';
 import { build, upgrade, gameLoop as logicGameLoop, saveGame, loadGame, resetGame } from './gameLogic.js';
+
+// --- AUTOMATIKUS MENTÉS AZ OLDAL BEZÁRÁSAKOR ---
+window.addEventListener('beforeunload', (event) => {
+    saveGame();
+});
 
 function masterGameLoop() {
     logicGameLoop();
@@ -37,7 +40,6 @@ function handleLoadingScreen() {
 }
 
 function initializeGame() {
-    console.log("Initializing game on page:", window.location.pathname);
 
     if (window.location.pathname.endsWith('buildings.html')) {
         const buildingContainer = document.getElementById('building-list');
@@ -56,24 +58,23 @@ function initializeGame() {
             });
         }
         
-        const saveBtn = document.getElementById('save-button');
         const resetBtn = document.getElementById('reset-button');
-        if (saveBtn) saveBtn.addEventListener('click', saveGame);
         if (resetBtn) resetBtn.addEventListener('click', resetGame);
     }
     
-    const wasGameLoaded = loadGame();
+    const loadResult = loadGame();
     updateDisplay();
 
-    // Ellenőrizzük, hogy ebben a session-ben kiírtuk-e már az üdvözlő üzenetet.
-    const hasBeenWelcomed = sessionStorage.getItem('medievalEmpireWelcomed');
+    const isNewSession = !sessionStorage.getItem('sessionStarted');
 
-    // Csak akkor írjuk ki, ha ez egy ÚJ játék ÉS MÉG NEM írtuk ki ebben a session-ben.
-    if (!wasGameLoaded && !hasBeenWelcomed) {
-        showMessage('Welcome to your new empire! Build and govern your kingdom!', 'success');
-        
-        // Elhelyezzük a "jelzőt" a sessionStorage-ben, hogy többet ne jelenjen meg.
-        sessionStorage.setItem('medievalEmpireWelcomed', 'true');
+    if (isNewSession) {
+        sessionStorage.setItem('sessionStarted', 'true');
+        if (!loadResult.loaded) {
+            showMessage('Welcome to your new empire! Build and govern your kingdom!', 'success');
+        } else if (loadResult.offlineTime >= 120) {
+            const timeAway = formatTime(loadResult.offlineTime);
+            showMessage(`Welcome back! While you were away for ${timeAway}, your empire gathered resources.`, 'success');
+        }
     }
 
     setInterval(masterGameLoop, 1000);

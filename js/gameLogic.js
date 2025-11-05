@@ -1,6 +1,13 @@
 import { gameState } from './state.js';
 import { showMessage, updateDisplay, capitalizeFirstLetter } from './ui.js';
 
+// --- ÚJ SEGÉDFÜGGVÉNY: AZ IDŐ FORMÁZÁSA ---
+const formatTime = (seconds) => {
+    if(seconds < 60) return `${Math.floor(seconds)} seconds`;
+    if(seconds < 3600) return `${Math.floor(seconds / 60)} minutes`;
+    return `${Math.floor(seconds / 3600)} hours and ${Math.floor((seconds % 3600) / 60)} minutes`;
+};
+
 export const build = (buildingType) => {
     const instances = gameState.buildings[buildingType];
     const meta = gameState.buildingMeta[buildingType];
@@ -102,26 +109,64 @@ export const gameLoop = () => {
 };
 
 export const saveGame = () => {
+    gameState.lastSaveTime = Date.now();
+
     localStorage.setItem('gameState', JSON.stringify(gameState));
-    showMessage('Game state saved successfully!', 'success');
 };
 
 export const loadGame = () => {
     const savedStateJSON = localStorage.getItem('gameState');
     if (savedStateJSON) {
         let savedState = JSON.parse(savedStateJSON);
+        let offlineTimeInSeconds = 0;
+
+        if (savedState.lastSaveTime) {
+            const now = Date.now();
+            offlineTimeInSeconds = Math.floor((now - savedState.lastSaveTime) / 1000);
+
+            if (offlineTimeInSeconds > 1) {
+                const warehouseMeta = savedState.buildingMeta.warehouse;
+                const keepMeta = savedState.buildingMeta.keep;
+                let totalWarehouseLevel = 0;
+                savedState.buildings.warehouse.forEach(w => totalWarehouseLevel += w.level);
+                let totalKeepLevel = 0;
+                savedState.buildings.keep.forEach(k => totalKeepLevel += k.level);
+                const totalBonusStorage = totalKeepLevel * keepMeta.storageBonus;
+                const caps = {
+                    wood: savedState.baseStorage.wood + (totalWarehouseLevel * warehouseMeta.baseStorageIncrease) + totalBonusStorage,
+                    stone: savedState.baseStorage.stone + (totalWarehouseLevel * warehouseMeta.baseStorageIncrease) + totalBonusStorage,
+                    food: savedState.baseStorage.food + (totalWarehouseLevel * warehouseMeta.baseStorageIncrease) + totalBonusStorage
+                };
+                
+                let totalWoodProduction = 0;
+                savedState.buildings.lumberyard.forEach(b => totalWoodProduction += b.level * savedState.buildingMeta.lumberyard.baseProduction);
+                let totalStoneProduction = 0;
+                savedState.buildings.quarry.forEach(b => totalStoneProduction += b.level * savedState.buildingMeta.quarry.baseProduction);
+                let totalFoodProduction = 0;
+                savedState.buildings.farm.forEach(b => totalFoodProduction += b.level * savedState.buildingMeta.farm.baseProduction);
+
+                const woodGained = Math.min(totalWoodProduction * offlineTimeInSeconds, Math.max(0, caps.wood - savedState.resources.wood));
+                const stoneGained = Math.min(totalStoneProduction * offlineTimeInSeconds, Math.max(0, caps.stone - savedState.resources.stone));
+                const foodGained = Math.min(totalFoodProduction * offlineTimeInSeconds, Math.max(0, caps.food - savedState.resources.food));
+
+                if (woodGained > 0) savedState.resources.wood += woodGained;
+                if (stoneGained > 0) savedState.resources.stone += stoneGained;
+                if (foodGained > 0) savedState.resources.food += foodGained;
+            }
+        }
+        
         if (savedState.resources) gameState.resources = savedState.resources;
         if (savedState.buildings) gameState.buildings = savedState.buildings;
         if (savedState.constructionQueue) gameState.constructionQueue = savedState.constructionQueue;
+        gameState.lastSaveTime = savedState.lastSaveTime;
+
         for (const type in gameState.buildingMeta) {
-            if (!gameState.buildings[type]) {
-                gameState.buildings[type] = [];
-            }
+            if (!gameState.buildings[type]) gameState.buildings[type] = [];
         }
-        showMessage('Game state loaded successfully!', 'success');
-        return true;
+
+        return { loaded: true, offlineTime: offlineTimeInSeconds };
     }
-    return false;
+    return { loaded: false, offlineTime: 0 };
 };
 
 export const resetGame = () => {

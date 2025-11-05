@@ -1,4 +1,5 @@
 export let gameState = {
+    lastSaveTime: null,
     baseStorage: { wood: 1500, stone: 1500, food: 1500 },
     resources: { wood: 50, stone: 20, food: 100, gold: 0, sapphire: 0 },
     buildings: {
