@@ -4,7 +4,7 @@
   <img src="./assets/background.png" style="width: 40%" alt="Medieval Empire Banner">
 </div>
 
-**Alpha v1.0.3**
+**Alpha v1.2.1**
 
 ---
 
